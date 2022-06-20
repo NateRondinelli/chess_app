@@ -190,8 +190,8 @@ if __name__ == "__main__":
     root = tk.Tk()
     outer_frame = ttk.Frame(root, padding=40)
     # fen = "8/4B3/8/5N2/8/2k5/8/K7 w - - 0 1"  # KBNvK TB 15 Beginning
-    fen = "8/8/8/4B3/8/4K3/5N2/5k2 w - - 0 1"  # KBNvK TB 15 Late
-    # fen = ""
+    # fen = "8/8/8/4B3/8/4K3/5N2/5k2 w - - 0 1"  # KBNvK TB 15 Late
+    fen = ""
     board = BoardGui(outer_frame, fen)
     board.grid(row=0, column=0)
     # side_pane = ttk.Frame(root, padding=20)
