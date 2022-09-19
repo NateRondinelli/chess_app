@@ -63,4 +63,5 @@ all_pieces = [chess.Piece.from_symbol(symbol) for symbol in piece_symbols]
 # Keep in mind promotions for pawns. 
 def rc_to_vector(rc_map):
     for piece in all_pieces:
+        pass
         # Ask Steve for piece to position map.
