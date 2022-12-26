@@ -2,11 +2,6 @@ from multiprocessing.sharedctypes import Value
 import numpy as np
 import chess
 from chess import Piece
-# position = chess.Board(fen='r1b1k1nr/p2p1pNp/n2B4/1p1NP2P/6P1/3P1Q2/P1P1K3/q5b1 b - - 0 1')
-# position = chess.Board(fen='8/8/8/7b/8/8/8/7R w - - 0 1')
-position = chess.Board(fen='2rq1rk1/1p1n1pb1/p2pp1pp/7P/4PP2/1NN2QP1/PPP5/2KRR3 w - - 0 1')
-
-print(position.piece_map())
 
 BOARD_SIZE=8
 ALL_PIECE_SYMBOLS = 'rnbqkbnrpppppppp'
@@ -100,6 +95,8 @@ def r_closure_to_vector(closure_map, piece_index):
     return closure_tensor
 
 def build_closure_tensor(position):
+    if isinstance(position, str):
+        position = chess.Board(fen=position)
     rc_map = {}
     ac_map = {}
     dc_map = {}
@@ -112,14 +109,18 @@ def build_closure_tensor(position):
         xc_map[(piece, square)] = x_closure(square, position)
 
     closure_tensor = []
-    # for closure in [ac_map, dc_map, xc_map]:
-    #     closure_tensor.append(closure_to_vector(closure, piece_index))
+    for closure in [ac_map, dc_map, xc_map]:
+        closure_tensor.append(closure_to_vector(closure, piece_index))
     closure_tensor.append(r_closure_to_vector(rc_map, piece_index))
     return closure_tensor
 
 # 4x32x64
 # Keep in mind promotions for pawns. 
+if __name__ == '__main__':
+    # position = chess.Board(fen='r1b1k1nr/p2p1pNp/n2B4/1p1NP2P/6P1/3P1Q2/P1P1K3/q5b1 b - - 0 1')
+    # position = chess.Board(fen='8/8/8/7b/8/8/8/7R w - - 0 1')
 
-closure_tensor = build_closure_tensor(position)
-
-print(np.sum(np.array(closure_tensor)))
+    position = chess.Board(fen='2rq1rk1/1p1n1pb1/p2pp1pp/7P/4PP2/1NN2QP1/PPP5/2KRR3 w - - 0 1')
+    print(position.piece_map())
+    closure_tensor = build_closure_tensor(position)
+    print(np.sum(np.array(closure_tensor)))
