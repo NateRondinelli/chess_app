@@ -61,7 +61,10 @@ class BoardGui(ttk.Frame):
 
         # create a canvas
         self.canvas = tk.Canvas(width=BOARD_WIDTH, height=BOARD_HEIGHT)
+        self.mask_canvas = tk.Canvas(width=BOARD_WIDTH, height=BOARD_HEIGHT)
         self.canvas.grid(row=0, column=0)
+        self.mask_canvas.grid(row=0, column=0)
+        self.mask_canvas.bind('<Button-1>', self.remove_mask)
         # self.frame = tk.Frame(self)
         # self.frame.grid(row=0, column=1)
 
@@ -93,6 +96,19 @@ class BoardGui(ttk.Frame):
         self.canvas.tag_bind("token", "<ButtonPress-1>", self.drag_start)
         self.canvas.tag_bind("token", "<ButtonRelease-1>", self.drag_stop)
         self.canvas.tag_bind("token", "<B1-Motion>", self.drag)
+ 
+    def remove_mask(self, event): 
+        print(event.type) 
+        self.mask_canvas.grid_remove()
+        self.after(2000, self.show_mask)
+
+    def show_mask(self):
+        self.mask_canvas.grid(row=0, column=0)
+
+    def print_key(self, event):
+        args = event.keysym, event.keycode, event.char 
+        print("Symbol: {}, Code: {}, Char: {}".format(*args)) 
+
 
     def create_board(self):
         for row in range(0, 8):
@@ -190,8 +206,8 @@ if __name__ == "__main__":
     root = tk.Tk()
     outer_frame = ttk.Frame(root, padding=40)
     # fen = "8/4B3/8/5N2/8/2k5/8/K7 w - - 0 1"  # KBNvK TB 15 Beginning
-    # fen = "8/8/8/4B3/8/4K3/5N2/5k2 w - - 0 1"  # KBNvK TB 15 Late
-    fen = ""
+    fen = "8/8/8/4B3/8/4K3/5N2/5k2 w - - 0 1"  # KBNvK TB 15 Late
+    # fen = ""
     board = BoardGui(outer_frame, fen)
     board.grid(row=0, column=0)
     # side_pane = ttk.Frame(root, padding=20)
