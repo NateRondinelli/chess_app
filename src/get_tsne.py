@@ -40,7 +40,7 @@ def get_autoencoder_features(data):
     def custom_loss_function(y_true, y_pred):
         codings = encoder(data)
         squared_difference = tf.square(y_true - y_pred)
-        return tf.reduce_mean(squared_difference)+tf.reduce_mean(tf.square(codings)t )
+        return tf.reduce_mean(squared_difference)+tf.reduce_mean(tf.square(codings) )
     autoencoder = keras.models.Sequential([encoder, decoder])
     # autoencoder.compile(loss='mse', optimizer = keras.optimizers.SGD(lr=0.01))
     autoencoder.compile(loss=custom_loss_function, optimizer = keras.optimizers.SGD(lr=0.01))
