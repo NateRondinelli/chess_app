@@ -1,7 +1,7 @@
 import pandas as pd
 
 def get_db_dataframe():
-    df = pd.read_csv('data/lichess_db_puzzle_w_header.csv')
+    df = pd.read_csv('lichess_db_puzzle_no_themes.csv')
     return df
 
 def gen_yield(generator):
@@ -28,4 +28,4 @@ def get_random_puzzle(size: int=1, get_generator: bool=False):
 if __name__ == '__main__':
     pzz = get_random_puzzle(5, get_generator=True)
     for pz in pzz:
-        pz.FEN
+        print(pz.FEN)

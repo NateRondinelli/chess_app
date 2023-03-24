@@ -68,10 +68,12 @@ def build_piece_index(piece_map):
     :return: A dictionary with keys as tuples of (piece, square) and values as index.
     """
     all_pieces = get_all_pieces()
+    #print(all_pieces)
     piece_index = {}
     for square, piece in piece_map.items():
         try:
             index = all_pieces.index(piece.symbol())
+            #print(index)
         except ValueError as e:
             try:
                 index = all_pieces.index(Piece(chess.PAWN, piece.color))

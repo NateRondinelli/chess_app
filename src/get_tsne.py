@@ -8,7 +8,7 @@ import tensorflow as tf
 import numpy as np
 import keras
 from keras import backend as K
-print(f'Available gpus: {K._get_available_gpus()}')
+#print(f'Available gpus: {K._get_available_gpus()}')
 
 def get_tsne(closure_tensors):
     """
@@ -40,7 +40,7 @@ def get_autoencoder_features(data):
     def custom_loss_function(y_true, y_pred):
         codings = encoder(data)
         squared_difference = tf.square(y_true - y_pred)
-        return tf.reduce_mean(squared_difference)+tf.reduce_mean(tf.square(codings)t )
+        return tf.reduce_mean(squared_difference)+tf.reduce_mean(tf.square(codings) )
     autoencoder = keras.models.Sequential([encoder, decoder])
     # autoencoder.compile(loss='mse', optimizer = keras.optimizers.SGD(lr=0.01))
     autoencoder.compile(loss=custom_loss_function, optimizer = keras.optimizers.SGD(lr=0.01))
@@ -55,7 +55,7 @@ def get_autoencoder_features(data):
 if __name__ == '__main__':
     np.random.seed(5)
     closure_tensors = []
-    for pz in get_random_puzzle(1000):
+    for pz in get_random_puzzle(200):
         closure_tensors.append(build_closure_tensor(pz.FEN))
     tsne_results = get_tsne(get_autoencoder_features(np.array(closure_tensors).reshape(len(closure_tensors), -1)))
     plot_tsne(tsne_results)
