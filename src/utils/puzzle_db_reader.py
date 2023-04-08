@@ -2,6 +2,7 @@ import pandas as pd
 
 def get_db_dataframe():
     df = pd.read_csv('lichess_db_puzzle_no_themes.csv')
+    #df = pd.read_csv('lichess_db_puzzle.csv')
     return df
 
 def gen_yield(generator):

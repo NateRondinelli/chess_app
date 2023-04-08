@@ -14,6 +14,7 @@ def init():
     np.random.seed(5)
     engine = Stockfish("stockfish\stockfish.exe")
     engine.set_depth(15)
+    #engine.set_depth(20)
     #pca = PCA(2)
     #df = pd.read_csv('lichess_db_puzzle_no_themes.csv')
     #X = df[["FEN","Moves"]]
@@ -27,7 +28,7 @@ def init():
         #print(state["score"])
         engine.set_fen_position(pz.FEN)
         value = (engine.get_evaluation())["value"]
-        #print(engine.get_evaluation())["value"])
+        #print((engine.get_evaluation())["value"])
         if(value < 0):
             X.append([value,0])
 
@@ -93,6 +94,6 @@ def preprocessed_kmeans(X):
 
 if __name__ == '__main__':
     X = init()
-    # elbow(X)
-    base_kmeans(X)
+    elbow(X)
+    # base_kmeans(X)
     preprocessed_kmeans(X)
